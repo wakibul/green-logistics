@@ -22,6 +22,15 @@ Route::group(['prefix' => 'master'], function () {
     Route::GET('countries',[
         'uses' => 'Api\Master\CountryController@index'
     ]);
+    Route::GET('vehicle-types',[
+        'uses' => 'Api\Master\MasterController@vehicleTypes'
+    ]);
+    Route::GET('fuel-types',[
+        'uses' => 'Api\Master\MasterController@fuelTypes'
+    ]);
+    Route::GET('vehicle-weight',[
+        'uses' => 'Api\Master\MasterController@vehicleWeight'
+    ]);
 });
 Route::group(['prefix' => 'user'], function () {
     Route::POST('login',[
