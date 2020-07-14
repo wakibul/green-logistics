@@ -40,3 +40,22 @@ Route::group(['prefix' => 'user'], function () {
         'uses' => 'Api\User\AuthController@register'
     ]);
 });
+Route::group(['prefix' => 'trucking'], function () {
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::POST('store',[
+            'uses' => 'Api\Trucking\TruckingController@store'
+        ]);
+
+        Route::GET('show/{id}',[
+            'uses' => 'Api\Trucking\TruckingController@show'
+        ]);
+
+        Route::GET('index',[
+            'uses' => 'Api\Trucking\TruckingController@index'
+        ]);
+
+        Route::POST('update/{id}',[
+            'uses' => 'Api\Trucking\TruckingController@update'
+        ]);
+    });
+});
