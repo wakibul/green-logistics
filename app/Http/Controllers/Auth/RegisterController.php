@@ -8,7 +8,7 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use App\Models\Country;
 class RegisterController extends Controller
 {
     /*
@@ -67,7 +67,16 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'country_id' => $data['country_id'],
+            'province' => $data['province'],
+            'phone_no' => $data['phone_no'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    public function showRegistrationForm()
+    {
+        $countries=Country::where('status',1)->get();
+        return view('auth.register', compact('countries'));
     }
 }
