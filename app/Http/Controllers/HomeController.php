@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\VehicleType;
+use App\Models\FuelType;
+use App\Models\GrossVehicleWeight;
+use App\Models\TruckingCompany;
+use Validator,Session,DB,Auth,Crypt;
 class HomeController extends Controller
 {
     /**
@@ -23,6 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('user.home');
+        $fuel_types = FuelType::where('status',1)->get();
+        return view('user.home',compact('fuel_types'));
     }
 }

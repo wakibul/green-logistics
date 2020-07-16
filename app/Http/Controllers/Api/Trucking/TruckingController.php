@@ -200,6 +200,7 @@ class TruckingController extends Controller
         $data['vehicle_type_id'] = $request->vehicle_type_id;
         $data['user_id'] = Auth::guard('sanctum')->id();
         $data['year_of_manufacture'] = $request->year_of_manufacture;
+        $data['age'] = intval(date('Y'))-intval($request->year_of_manufacture);
         $data['no_of_wheels'] = $request->no_of_wheels;
         $data['fuel_type_id'] = $request->fuel_type_id;
         $data['cost_of_fuel_consumption_per_year'] = $request->cost_of_fuel_consumption_per_year;

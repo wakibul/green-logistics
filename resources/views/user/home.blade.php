@@ -51,25 +51,64 @@
                     </div><!-- /.card-header -->
                     <div class="card-body">
                         <div class="row">
+
                             <div class="col-md-3">
                                 <table class="table table-bordered table-condensed">
                                     <tbody>
+                                        @foreach($fuel_types as $key=>$fuel_type)
                                         <tr>
-                                            <td>Diesel</td>
-                                            <td align="right" class="tdbg">5</td>
+                                            <td>{{$fuel_type->name}}</td>
+                                            <td align="right" class="tdbg">
+                                                @php
+                                                 $where = [['fuel_type_id',$fuel_type->id]];
+                                                @endphp
+                                                {{getTotalCount("App\Models\TruckingCompany",$where)}}
+                                            </td>
+                                        </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-md-3">
+                                <table class="table table-bordered table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <td colspan="2">Avarage Age<td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr>
+                                            <td>1 - 5 yrs</td>
+                                            <td>5 - 10 yrs</td>
+                                            <td>> 10 yrs</td>
                                         </tr>
                                         <tr>
-                                            <td>Gasoline</td>
-                                            <td align="right"  class="tdbg">-</td>
+                                            <td align="center" class="tdbg">
+                                                @php
+                                                 $where = [1,5];
+                                                @endphp
+                                                {{getAvarageAge($where)}}
+                                            </td>
+
+                                            <td align="center" class="tdbg">
+                                                @php
+                                                 $where = [5,10];
+                                                @endphp
+                                                {{getAvarageAge($where)}}
+                                            </td>
+
+                                            <td align="center" class="tdbg">
+                                                @php
+                                                $where = [10,10000];
+                                               @endphp
+                                               {{getAvarageAge($where)}}
+                                            </td>
                                         </tr>
-                                        <tr>
-                                            <td>CNG</td>
-                                            <td align="right" class="tdbg">5</td>
-                                        </tr>
-                                        <tr>
-                                            <td>LPG</td>
-                                            <td align="right" class="tdbg">5</td>
-                                        </tr>
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -97,26 +136,19 @@
                                         <h5>Total Fuel Consumtion</h5>
                                         <table class="table table-bordered">
                                             <tbody>
+                                                @foreach($fuel_types as $key=>$fuel_type)
                                                 <tr>
-                                                    <td>Diesel</td>
-                                                    <td  align="right"  class="tdbg">230,6998.00</td>
-                                                    <td>Litres</td>
+                                                    <td>{{$fuel_type->name}}</td>
+                                                    <td align="right" class="tdbg">
+                                                        @php
+                                                        $where = [['fuel_type_id',$fuel_type->id]];
+                                                        @endphp
+                                                        {{getTotalCount("App\Models\TruckingCompany",$where)}}
+                                                    </td>
+                                                    <td>{{$fuel_type->unit}}</td>
                                                 </tr>
-                                                <tr>
-                                                    <td>Gasoline</td>
-                                                    <td  align="right"  class="tdbg">-</td>
-                                                    <td>Litres</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>CNG</td>
-                                                    <td  align="right"  class="tdbg">176,90,00</td>
-                                                    <td>KG</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>LPG</td>
-                                                    <td  align="right"  class="tdbg">-</td>
-                                                    <td>Litres</td>
-                                                </tr>
+                                                @endforeach
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -214,27 +246,23 @@
                                     <div class="col-md-6">
                                         <strong>Total Fuel Consumtion</strong>
                                         <table class="table table-bordered">
+
                                             <tbody>
+
+                                                @foreach($fuel_types as $key=>$fuel_type)
                                                 <tr>
-                                                    <td>Diesel</td>
-                                                    <td  align="right"  class="tdbg">230,6998.00</td>
-                                                    <td>Litres</td>
+                                                    <td>{{$fuel_type->name}}</td>
+                                                    <td align="right" class="tdbg">
+                                                        @php
+                                                        $where = [['fuel_type_id',$fuel_type->id]];
+                                                        @endphp
+                                                        {{getTotalCount("App\Models\TruckingCompany",$where)}}
+                                                    </td>
+                                                    <td>{{$fuel_type->unit}}</td>
                                                 </tr>
-                                                <tr>
-                                                    <td>Gasoline</td>
-                                                    <td  align="right"  class="tdbg">-</td>
-                                                    <td>Litres</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>CNG</td>
-                                                    <td  align="right"  class="tdbg">176,90,00</td>
-                                                    <td>KG</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>LPG</td>
-                                                    <td  align="right"  class="tdbg">-</td>
-                                                    <td>Litres</td>
-                                                </tr>
+                                                @endforeach
+
+
                                             </tbody>
                                         </table>
                                     </div>
