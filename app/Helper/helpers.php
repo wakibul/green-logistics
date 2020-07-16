@@ -14,12 +14,16 @@ function getTotalCount($model,$where){
 
 function getAvarageAge($where){
     $companies =  "App\Models\TruckingCompany"::whereBetween('age',$where)->get();
+    if(!$companies->isEmpty()){
     $total_companies =  "App\Models\TruckingCompany"::get();
     $company_array = [];
     foreach($companies as $key=>$val){
         array_push($company_array,$val->age);
     }
     return $average = ceil( array_sum($company_array) / count($total_companies) );
+    }
+    else
+    return 0;
 }
 
 
