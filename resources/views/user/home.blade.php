@@ -51,6 +51,24 @@
                     </div><!-- /.card-header -->
                     <div class="card-body">
                         <div class="row">
+                            {{-- <div class="col-md-3">
+                                <table class="table table-bordered table-condensed">
+                                    <tbody>
+                                        @foreach($vehicle_types as $key=>$vehicle_type)
+                                        <tr>
+                                            <td>{{$vehicle_type->name}}</td>
+                                            <td align="right" class="tdbg">
+                                                @php
+                                                 $where = [['vehicle_type_id',$vehicle_type->id]];
+                                                @endphp
+                                                {{getTotalCount("App\Models\TruckingCompany",$where)}}
+                                            </td>
+                                        </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div> --}}
 
                             <div class="col-md-3">
                                 <table class="table table-bordered table-condensed">
@@ -143,7 +161,7 @@
                                                         @php
                                                         $where = [['fuel_type_id',$fuel_type->id]];
                                                         @endphp
-                                                        {{getTotalCount("App\Models\TruckingCompany",$where)}}
+                                                        {{totalConsumption("App\Models\TruckingCompany",$where,'cost_of_fuel_consumption_per_year')}}
                                                     </td>
                                                     <td>{{$fuel_type->unit}}</td>
                                                 </tr>
@@ -156,28 +174,18 @@
                                         <h5>Cost -USD</h5>
                                         <table class="table table-bordered">
                                             <tbody>
+                                                @foreach($fuel_types as $key=>$fuel_type)
                                                 <tr>
-                                                    <td>Diesel</td>
-                                                    <td  align="right"  class="tdbg">230,6998.00</td>
+                                                    <td>{{$fuel_type->name}}</td>
+                                                    <td align="right" class="tdbg">
+                                                        @php
+                                                        $where = [['fuel_type_id',$fuel_type->id]];
+                                                        @endphp
+                                                        {{round(totalConsumption("App\Models\TruckingCompany",$where,'cost_of_fuel_consumption_per_year')*$fuel_type->price,2)}}
+                                                    </td>
 
                                                 </tr>
-                                                <tr>
-                                                    <td>Gasoline</td>
-                                                    <td  align="right"  class="tdbg">-</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>CNG</td>
-                                                    <td  align="right"  class="tdbg">176,90,00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>LPG</td>
-                                                    <td  align="right"  class="tdbg">-</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Total</strong></td>
-                                                    <td   align="right"  class="tdbg">380,07.00</td>
-                                                </tr>
+                                                @endforeach
 
                                             </tbody>
                                         </table>
@@ -188,67 +196,6 @@
                                         <h5>Fuel Consumed during Idling</h5>
                                         <table class="table table-bordered">
                                             <tbody>
-                                                <tr>
-                                                    <td>Diesel</td>
-                                                    <td  align="right"  class="tdbg">230,6998.00</td>
-                                                    <td>Litres</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Gasoline</td>
-                                                    <td  align="right"  class="tdbg">-</td>
-                                                    <td>Litres</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>CNG</td>
-                                                    <td  align="right"  class="tdbg">176,90,00</td>
-                                                    <td>KG</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>LPG</td>
-                                                    <td  align="right"  class="tdbg">-</td>
-                                                    <td>Litres</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <h5>Cost -USD</h5>
-                                        <table class="table table-bordered">
-                                            <tbody>
-                                                <tr>
-                                                    <td>Diesel</td>
-                                                    <td  align="right"  class="tdbg">230,6998.00</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Gasoline</td>
-                                                    <td  align="right"  class="tdbg">-</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>CNG</td>
-                                                    <td  align="right"  class="tdbg">176,90,00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>LPG</td>
-                                                    <td  align="right"  class="tdbg">-</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Total</strong></td>
-                                                    <td   align="right"  class="tdbg">380,07.00</td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <strong>Total Fuel Consumtion</strong>
-                                        <table class="table table-bordered">
-
-                                            <tbody>
-
                                                 @foreach($fuel_types as $key=>$fuel_type)
                                                 <tr>
                                                     <td>{{$fuel_type->name}}</td>
@@ -256,47 +203,77 @@
                                                         @php
                                                         $where = [['fuel_type_id',$fuel_type->id]];
                                                         @endphp
-                                                        {{getTotalCount("App\Models\TruckingCompany",$where)}}
+                                                        {{totalConsumption("App\Models\TruckingCompany",$where,'avarage_idling_time_per_day')}}
                                                     </td>
                                                     <td>{{$fuel_type->unit}}</td>
                                                 </tr>
                                                 @endforeach
-
-
                                             </tbody>
                                         </table>
                                     </div>
                                     <div class="col-md-6">
-                                        <strong>Cost -USD</strong>
+                                        <h5>Cost -USD</h5>
                                         <table class="table table-bordered">
                                             <tbody>
+                                                @foreach($fuel_types as $key=>$fuel_type)
                                                 <tr>
-                                                    <td>Diesel</td>
-                                                    <td  align="right"  class="tdbg">230,6998.00</td>
+                                                    <td>{{$fuel_type->name}}</td>
+                                                    <td align="right" class="tdbg">
+                                                        @php
+                                                        $where = [['fuel_type_id',$fuel_type->id]];
+                                                        @endphp
+                                                        {{round(totalConsumption("App\Models\TruckingCompany",$where,'avarage_idling_time_per_day')*$fuel_type->price,2)}}
+                                                    </td>
 
                                                 </tr>
-                                                <tr>
-                                                    <td>Gasoline</td>
-                                                    <td  align="right"  class="tdbg">-</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>CNG</td>
-                                                    <td  align="right"  class="tdbg">176,90,00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>LPG</td>
-                                                    <td  align="right"  class="tdbg">-</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><strong>Total</strong></td>
-                                                    <td   align="right"  class="tdbg">380,07.00</td>
-                                                </tr>
+                                                @endforeach
 
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5>Fuel Consumed during Empty Trips</h5>
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                @foreach($fuel_types as $key=>$fuel_type)
+                                                <tr>
+                                                    <td>{{$fuel_type->name}}</td>
+                                                    <td align="right" class="tdbg">
+                                                        @php
+                                                        $where = [['fuel_type_id',$fuel_type->id]];
+                                                        @endphp
+                                                        {{totalConsumption("App\Models\TruckingCompany",$where,'avarage_empty_trip_per_year')}}
+                                                    </td>
+                                                    <td>{{$fuel_type->unit}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5>Cost -USD</h5>
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                @foreach($fuel_types as $key=>$fuel_type)
+                                                <tr>
+                                                    <td>{{$fuel_type->name}}</td>
+                                                    <td align="right" class="tdbg">
+                                                        @php
+                                                        $where = [['fuel_type_id',$fuel_type->id]];
+                                                        @endphp
+                                                        {{round(totalConsumption("App\Models\TruckingCompany",$where,'avarage_empty_trip_per_year')*$fuel_type->price,2)}}
+                                                    </td>
+
+                                                </tr>
+                                                @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
                             </div>
 
                             <div class="col-md-6">
@@ -328,17 +305,31 @@
 
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-          ['Year', 'Idling', 'Empty Trips', 'Total'],
-          ['Diesel', 1000, 400, 200],
-          ['Gasoline', 1170, 460, 250],
-          ['LPG', 660, 1120, 300],
-          ['CNG', 1030, 540, 350]
+          ['Total fuel consumption', 'Total', 'Idling', 'Empty Trips'],
+          ['Diesel', {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',1]],'cost_of_fuel_consumption_per_year')}},
+          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',1]],'avarage_idling_time_per_day')}},
+          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',1]],'avarage_empty_trip_per_year')}}
+          ],
+          ['Gasoline', {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',2]],'cost_of_fuel_consumption_per_year')}},
+          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',2]],'avarage_idling_time_per_day')}},
+          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',2]],'avarage_empty_trip_per_year')}}
+          ],
+          ['CNG', {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',3]],'cost_of_fuel_consumption_per_year')}},
+          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',3]],'avarage_idling_time_per_day')}},
+          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',3]],'avarage_empty_trip_per_year')}}
+          ],
+          ['LPG', {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',4]],'cost_of_fuel_consumption_per_year')}},
+          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',4]],'avarage_idling_time_per_day')}},
+          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',4]],'avarage_empty_trip_per_year')}}
+          ]
+
+
         ]);
 
         var options = {
           chart: {
-            title: 'Total Fuel Consumtion',
-            subtitle: 'Diesel, Gasoline, LPG and CNG',
+            title: '',
+            subtitle: '',
           }
         };
 

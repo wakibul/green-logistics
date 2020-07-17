@@ -27,7 +27,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $vehicle_types = VehicleType::where('status',1)->get();
         $fuel_types = FuelType::where('status',1)->get();
-        return view('user.home',compact('fuel_types'));
+        return view('user.home',compact('fuel_types','vehicle_types'));
     }
 }

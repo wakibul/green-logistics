@@ -26,5 +26,14 @@ function getAvarageAge($where){
     return 0;
 }
 
+function totalConsumption($model,$where,$field){
+    $fuel_consumption =  $model::where($where)->sum($field);
+    if($fuel_consumption){
+        return $fuel_consumption;
+    }
+    else
+    return 0;
+}
+
 
 
