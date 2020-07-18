@@ -1,5 +1,4 @@
 <?php
-
 function left($str, $length) {
      return substr($str, 0, $length);
 }
@@ -8,12 +7,12 @@ function right($str, $length) {
      return substr($str, -$length);
 }
 
-function getTotalCount($model,$where){
-    return $model::where($where)->count();
+function getTotalCount($model,$where,$user_id){
+    return $model::where($where)->where('user_id',$user_id)->count();
 }
 
-function getAvarageAge($where){
-    $companies =  "App\Models\TruckingCompany"::whereBetween('age',$where)->get();
+function getAvarageAge($where,$user_id){
+    $companies =  "App\Models\TruckingCompany"::whereBetween('age',$where)->where('user_id',$user_id)->get();
     if(!$companies->isEmpty()){
     $total_companies =  "App\Models\TruckingCompany"::get();
     $company_array = [];
@@ -26,8 +25,8 @@ function getAvarageAge($where){
     return 0;
 }
 
-function totalConsumption($model,$where,$field){
-    $fuel_consumption =  $model::where($where)->sum($field);
+function totalConsumption($model,$where,$field,$user_id){
+    $fuel_consumption =  $model::where($where)->where('user_id',$user_id)->sum($field);
     if($fuel_consumption){
         return $fuel_consumption;
     }

@@ -80,7 +80,7 @@
                                                 @php
                                                  $where = [['fuel_type_id',$fuel_type->id]];
                                                 @endphp
-                                                {{getTotalCount("App\Models\TruckingCompany",$where)}}
+                                                {{getTotalCount("App\Models\TruckingCompany",$where,Auth::id())}}
                                             </td>
                                         </tr>
                                         @endforeach
@@ -108,21 +108,21 @@
                                                 @php
                                                  $where = [1,5];
                                                 @endphp
-                                                {{getAvarageAge($where)}}
+                                                {{getAvarageAge($where,Auth::id())}}
                                             </td>
 
                                             <td align="center" class="tdbg">
                                                 @php
                                                  $where = [5,10];
                                                 @endphp
-                                                {{getAvarageAge($where)}}
+                                                {{getAvarageAge($where,Auth::id())}}
                                             </td>
 
                                             <td align="center" class="tdbg">
                                                 @php
                                                 $where = [10,10000];
                                                @endphp
-                                               {{getAvarageAge($where)}}
+                                               {{getAvarageAge($where,Auth::id())}}
                                             </td>
                                         </tr>
 
@@ -161,7 +161,7 @@
                                                         @php
                                                         $where = [['fuel_type_id',$fuel_type->id]];
                                                         @endphp
-                                                        {{totalConsumption("App\Models\TruckingCompany",$where,'cost_of_fuel_consumption_per_year')}}
+                                                        {{totalConsumption("App\Models\TruckingCompany",$where,'cost_of_fuel_consumption_per_year',Auth::id())}}
                                                     </td>
                                                     <td>{{$fuel_type->unit}}</td>
                                                 </tr>
@@ -181,7 +181,7 @@
                                                         @php
                                                         $where = [['fuel_type_id',$fuel_type->id]];
                                                         @endphp
-                                                        {{round(totalConsumption("App\Models\TruckingCompany",$where,'cost_of_fuel_consumption_per_year')*$fuel_type->price,2)}}
+                                                        {{round(totalConsumption("App\Models\TruckingCompany",$where,'cost_of_fuel_consumption_per_year',Auth::id())*$fuel_type->price,2)}}
                                                     </td>
 
                                                 </tr>
@@ -203,7 +203,7 @@
                                                         @php
                                                         $where = [['fuel_type_id',$fuel_type->id]];
                                                         @endphp
-                                                        {{totalConsumption("App\Models\TruckingCompany",$where,'avarage_idling_time_per_day')}}
+                                                        {{totalConsumption("App\Models\TruckingCompany",$where,'avarage_idling_time_per_day',Auth::id())}}
                                                     </td>
                                                     <td>{{$fuel_type->unit}}</td>
                                                 </tr>
@@ -222,7 +222,7 @@
                                                         @php
                                                         $where = [['fuel_type_id',$fuel_type->id]];
                                                         @endphp
-                                                        {{round(totalConsumption("App\Models\TruckingCompany",$where,'avarage_idling_time_per_day')*$fuel_type->price,2)}}
+                                                        {{round(totalConsumption("App\Models\TruckingCompany",$where,'avarage_idling_time_per_day',Auth::id())*$fuel_type->price,2)}}
                                                     </td>
 
                                                 </tr>
@@ -244,7 +244,7 @@
                                                         @php
                                                         $where = [['fuel_type_id',$fuel_type->id]];
                                                         @endphp
-                                                        {{totalConsumption("App\Models\TruckingCompany",$where,'avarage_empty_trip_per_year')}}
+                                                        {{totalConsumption("App\Models\TruckingCompany",$where,'avarage_empty_trip_per_year',Auth::id())}}
                                                     </td>
                                                     <td>{{$fuel_type->unit}}</td>
                                                 </tr>
@@ -263,7 +263,7 @@
                                                         @php
                                                         $where = [['fuel_type_id',$fuel_type->id]];
                                                         @endphp
-                                                        {{round(totalConsumption("App\Models\TruckingCompany",$where,'avarage_empty_trip_per_year')*$fuel_type->price,2)}}
+                                                        {{round(totalConsumption("App\Models\TruckingCompany",$where,'avarage_empty_trip_per_year',Auth::id())*$fuel_type->price,2)}}
                                                     </td>
 
                                                 </tr>
@@ -306,21 +306,21 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Total fuel consumption', 'Total', 'Idling', 'Empty Trips'],
-          ['Diesel', {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',1]],'cost_of_fuel_consumption_per_year')}},
-          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',1]],'avarage_idling_time_per_day')}},
-          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',1]],'avarage_empty_trip_per_year')}}
+          ['Diesel', {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',1]],'cost_of_fuel_consumption_per_year',Auth::id())}},
+          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',1]],'avarage_idling_time_per_day',Auth::id())}},
+          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',1]],'avarage_empty_trip_per_year',Auth::id())}}
           ],
-          ['Gasoline', {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',2]],'cost_of_fuel_consumption_per_year')}},
-          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',2]],'avarage_idling_time_per_day')}},
-          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',2]],'avarage_empty_trip_per_year')}}
+          ['Gasoline', {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',2]],'cost_of_fuel_consumption_per_year',Auth::id())}},
+          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',2]],'avarage_idling_time_per_day',Auth::id())}},
+          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',2]],'avarage_empty_trip_per_year',Auth::id())}}
           ],
-          ['CNG', {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',3]],'cost_of_fuel_consumption_per_year')}},
-          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',3]],'avarage_idling_time_per_day')}},
-          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',3]],'avarage_empty_trip_per_year')}}
+          ['CNG', {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',3]],'cost_of_fuel_consumption_per_year',Auth::id())}},
+          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',3]],'avarage_idling_time_per_day',Auth::id())}},
+          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',3]],'avarage_empty_trip_per_year',Auth::id())}}
           ],
-          ['LPG', {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',4]],'cost_of_fuel_consumption_per_year')}},
-          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',4]],'avarage_idling_time_per_day')}},
-          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',4]],'avarage_empty_trip_per_year')}}
+          ['LPG', {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',4]],'cost_of_fuel_consumption_per_year',Auth::id())}},
+          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',4]],'avarage_idling_time_per_day',Auth::id())}},
+          {{totalConsumption("App\Models\TruckingCompany",[['fuel_type_id',4]],'avarage_empty_trip_per_year',Auth::id())}}
           ]
 
 
