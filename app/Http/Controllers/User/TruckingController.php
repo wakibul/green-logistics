@@ -19,7 +19,7 @@ class TruckingController extends Controller
     public function index()
     {
         //
-        $truckings = TruckingCompany::paginate(15);
+        $truckings = TruckingCompany::where('user_id',Auth::id())->paginate(15);
         return view('user.trucking.index',compact('truckings'));
     }
 
