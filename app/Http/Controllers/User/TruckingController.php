@@ -113,7 +113,7 @@ class TruckingController extends Controller
             return redirect()->back()->withErrors(['errors'=>$e->getMessage()])->withInput($request->all());
         }
         DB::commit();
-        Session::flash('success','A new Information added successfully');
+        Session::flash('success','New Information added successfully');
         return redirect()->back();
     }
 

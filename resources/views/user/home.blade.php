@@ -281,7 +281,99 @@
                             </div>
 
                         </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <h5>Kilometers Driven</h5>
+                                        <strong>Total Kilometers Driven</strong>
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td align="center" class="tdbg"></td>
+                                                    <td align="center" class="tdbg">Light</td>
+                                                    <td align="center" class="tdbg">Medium</td>
+                                                    <td align="center" class="tdbg">Heavy</td>
+                                                </tr>
+                                                @foreach($fuel_types as $key=>$fuel_type)
+                                                <tr>
+                                                    <td>{{$fuel_type->name}}</td>
+                                                    <td align="right" class="tdbg">
+                                                        @php
+                                                        $where = [['fuel_type_id',$fuel_type->id],['gross_vehicle_weight_id',1]];
+                                                        @endphp
+                                                        {{totalConsumption("App\Models\TruckingCompany",$where,'no_of_running_per_km_year',Auth::id())}}
+                                                    </td>
+                                                    <td align="right" class="tdbg">
+                                                        @php
+                                                        $where = [['fuel_type_id',$fuel_type->id],['gross_vehicle_weight_id',2]];
+                                                        @endphp
+                                                        {{totalConsumption("App\Models\TruckingCompany",$where,'no_of_running_per_km_year',Auth::id())}}
+                                                    </td>
+                                                    <td align="right" class="tdbg">
+                                                        @php
+                                                        $where = [['fuel_type_id',$fuel_type->id],['gross_vehicle_weight_id',3]];
+                                                        @endphp
+                                                        {{totalConsumption("App\Models\TruckingCompany",$where,'no_of_running_per_km_year',Auth::id())}}
+                                                    </td>
+
+                                                </tr>
+                                                @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <strong>Kilometers driven during emptry trips</strong>
+                                        <table class="table table-bordered">
+                                            <tbody>
+                                                <tr>
+                                                    <td align="center" class="tdbg"></td>
+                                                    <td align="center" class="tdbg">Light</td>
+                                                    <td align="center" class="tdbg">Medium</td>
+                                                    <td align="center" class="tdbg">Heavy</td>
+                                                </tr>
+                                                @foreach($fuel_types as $key=>$fuel_type)
+                                                <tr>
+                                                    <td>{{$fuel_type->name}}</td>
+                                                    <td align="right" class="tdbg">
+                                                        @php
+                                                        $where = [['fuel_type_id',$fuel_type->id],['gross_vehicle_weight_id',1]];
+                                                        @endphp
+                                                        {{totalConsumption("App\Models\TruckingCompany",$where,'avarage_distance_per_km_trip',Auth::id())* totalConsumption("App\Models\TruckingCompany",$where,'avarage_empty_trip_per_year',Auth::id())}}
+                                                    </td>
+                                                    <td align="right" class="tdbg">
+                                                        @php
+                                                        $where = [['fuel_type_id',$fuel_type->id],['gross_vehicle_weight_id',2]];
+                                                        @endphp
+                                                        {{totalConsumption("App\Models\TruckingCompany",$where,'avarage_distance_per_km_trip',Auth::id()) * totalConsumption("App\Models\TruckingCompany",$where,'avarage_empty_trip_per_year',Auth::id())}}
+                                                    </td>
+                                                    <td align="right" class="tdbg">
+                                                        @php
+                                                        $where = [['fuel_type_id',$fuel_type->id],['gross_vehicle_weight_id',3]];
+                                                        @endphp
+                                                        {{totalConsumption("App\Models\TruckingCompany",$where,'avarage_distance_per_km_trip',Auth::id()) * totalConsumption("App\Models\TruckingCompany",$where,'avarage_empty_trip_per_year',Auth::id())}}
+                                                    </td>
+
+                                                </tr>
+                                                @endforeach
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+
                     </div><!-- /.card-body -->
+                    <div class="col-md-6">
+                        <div id="piechart" style="width: 550px; height: 350px;"></div>
+                    </div>
                   </div>
             </div>
         </div>
@@ -336,6 +428,26 @@
         var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
 
         chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(pieChart);
+
+      function pieChart() {
+
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          ['With Load',     {{totalConsumption("App\Models\TruckingCompany",[],'no_of_running_per_km_year',Auth::id())}}],
+          ['Empty',     {{totalConsumption("App\Models\TruckingCompany",[],'avarage_distance_per_km_trip',Auth::id()) * totalConsumption("App\Models\TruckingCompany",[],'avarage_empty_trip_per_year',Auth::id())}}]
+        ]);
+
+        var options = {
+          title: ''
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
       }
     </script>
 @endsection
