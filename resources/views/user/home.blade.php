@@ -143,7 +143,7 @@
                     <div class="card-header ui-sortable-handle" style="cursor: move;">
                       <h3 class="card-title">
                         <i class="fas fa-gas-pump mr-1"></i>
-                        Fuel Consumtion
+                        Fuel Consumption
                       </h3>
                     </div><!-- /.card-header -->
                     <div class="card-body">
@@ -151,7 +151,7 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <h5>Total Fuel Consumtion</h5>
+                                        <h5>Total Fuel Consumption</h5>
                                         <table class="table table-bordered">
                                             <tbody>
                                                 @foreach($fuel_types as $key=>$fuel_type)
