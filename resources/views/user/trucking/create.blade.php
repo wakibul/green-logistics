@@ -160,7 +160,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-3">
-                                    No. of Runing - Kilomater / year (Km/Yr)
+                                    No. of Running - Kilometer / year (Km/Yr)
                                 </div>
                                 <div class="col-md-6">
                                 <input type="number" name="no_of_running_per_km_year" class="form-control validate[required]" value="{{old('no_of_running_per_km_year')}}">
